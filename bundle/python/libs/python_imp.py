@@ -216,13 +216,11 @@ def functions():
     return func_dir
 
 
-log_file = open('/Users/seandickert/.vim/log.txt', 'a')
 if __name__ == '__main__':
     args = sys.argv
     if len(args) > 0:
         try:
             func = functions()[args[0]]
             func(args[1:])
-            log_file.close()
         except KeyError:
             print(args[0] + ' not recognized as a command')
