@@ -2,38 +2,40 @@ if !has('python')
     finish
 endif
 
+let g:py_file = fnamemodify(resolve(expand("<sfile>:p")), ":h")."/../libs/python_imp.py"
+let g:exec_com = "pyfile ".g:py_file
 python import sys
 python import vim
 
 function! CommentBlock()
     python sys.argv = ["comment"]
-    pyfile /Users/seandickert/.vim/python_imp.py
+    execute g:exec_com
 endfunc
 
 function! UnCommentBlock()
     python sys.argv = ["uncomment"]
-    pyfile /Users/seandickert/.vim/python_imp.py
+    execute g:exec_com
 endfunc
     
 function! FormatList(quote_char)
     python sys.argv = ["list", vim.eval("a:quote_char")]
-    pyfile /Users/seandickert/.vim/python_imp.py
+    execute g:exec_com
 endfunc
 
 function! FormatDict(quote_char)
     python sys.argv = ["dict", vim.eval("a:quote_char")]
-    pyfile /Users/seandickert/.vim/python_imp.py
+    execute g:exec_com
 endfunc
 
 function! OpenChar(quote_char)
     python sys.argv = ["open_char", vim.eval("a:quote_char")]
-    pyfile /Users/seandickert/.vim/python_imp.py
+    execute g:exec_com
     return ""
 endfunc
 
 function! JumpChar(quote_char)
     python sys.argv = ["jump_char", vim.eval("a:quote_char")]
-    pyfile /Users/seandickert/.vim/python_imp.py
+    execute g:exec_com
     return ""
 endfunc
 

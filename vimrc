@@ -1,5 +1,6 @@
 let mapleader=" "
-source /Users/seandickert/.vim/python_calls.vim
+execute pathogen#infect()
+"source /Users/seandickert/.vim/python_calls.vim
 
 "turn on syntax highlighting
 syntax on  
@@ -9,6 +10,9 @@ augroup filetype_all
 autocmd!
 autocmd FileType python :iabbrev <buffer> iff if:<left>
 augroup END
+
+"Shift tab now does reverse tab
+inoremap <S-Tab> <C-d>
 
 "p is now a movement for an operator that says everything inside parens so dp will delete everything between parens
 "works with all operators such as y (yank), c (change), etc
@@ -87,16 +91,19 @@ nnoremap % v%
 nnoremap <silent> <leader>t :tabnew<CR>
 nnoremap <silent> <leader>tq :tabclose<CR>
 nnoremap <silent> <leader>tQ :tabonly<CR>
-nnoremap L $
-nnoremap H 0
-nnoremap <silent> LL :tabn<CR>
-nnoremap <silent> HH :tabp<CR>
+nnoremap <silent> L :tabnext<CR>
+nnoremap <silent> H :tabprevious<CR>
 
 
 nnoremap <leader>wv <C-w>v<CR>
 nnoremap <leader>wh <C-w>s<CR>
 nnoremap <leader>w <C-w>w<CR>
 nnoremap <leader>wq <C-w>q<CR>
+
+nnoremap <silent> <C-h> :wincmd h<CR>
+nnoremap <silent> <C-j> :wincmd j<CR>
+nnoremap <silent> <C-k> :wincmd k<CR>
+nnoremap <silent> <C-l> :wincmd l<CR>
 
 nnoremap <leader>r <C-R>
 
@@ -152,3 +159,33 @@ if exists("+showtabline")
     set stal=2
     set tabline=%!MyTabLine()
 endif
+
+function! BufSel(pattern)
+    let bufcount = bufnr("%")
+    let currbufnr = 1
+    let nummatches = 0
+    let firstmatchingbufnr = 0
+    while currbufnr <= bufcount
+        if(bufexists(currbufnr))
+            let currbufname = bufname(currbufnr)
+            if(match(currbufname, a:pattern) > -1)
+                echo currbufnr . ": ". bufname(currbufnr)
+                let nummatches += 1
+                let firstmatchingbufnr = currbufnr
+            endif
+        endif
+        let currbufnr = currbufnr + 1
+    endwhile
+    if(nummatches == 1)
+        execute ":buffer ". firstmatchingbufnr
+    elseif(nummatches > 1)
+        let desiredbufnr = input("Enter buffer number: ")
+        if(strlen(desiredbufnr) != 0)
+            execute ":buffer ". desiredbufnr
+        endif
+    else
+        echo "No matching buffers"
+    endif
+endfunction
+
+command! -nargs=1 Bs :call BufSel("<args>")
