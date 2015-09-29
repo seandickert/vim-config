@@ -1,6 +1,9 @@
 let mapleader=" "
+
+"So pathogen sets the right runtime paths
 execute pathogen#infect()
-"source /Users/seandickert/.vim/python_calls.vim
+
+filetype plugin on
 
 "turn on syntax highlighting
 syntax on  
