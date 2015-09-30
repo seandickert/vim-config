@@ -1,3 +1,4 @@
+let g:pathogen_disabled = ['']
 let mapleader=" "
 
 "So pathogen sets the right runtime paths
@@ -20,6 +21,19 @@ inoremap <S-Tab> <C-d>
 "p is now a movement for an operator that says everything inside parens so dp will delete everything between parens
 "works with all operators such as y (yank), c (change), etc
 onoremap p i(
+onoremap ' i'
+onoremap " i"
+onoremap [ i[
+onoremap { i{
+onoremap < i<
+
+onoremap op a(
+onoremap o' a'
+onoremap o" a"
+onoremap o[ a[
+onoremap o{ a{
+onoremap o< a<
+
 "inoremap FF <Esc>
 "vnoremap FF <Esc>
 "as a test..could get annoying
@@ -70,7 +84,7 @@ nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 "source vimrc
 nnoremap <leader>sv :source $MYVIMRC<cr>
 "make current word upper case
-inoremap <c-u> <esc>viwU<esc>i
+inoremap <c-u> <esc>viwU<esc>ea
 "move line down
 nnoremap - ddp
 "move line up 
