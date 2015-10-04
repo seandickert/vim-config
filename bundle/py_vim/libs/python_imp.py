@@ -206,12 +206,10 @@ def jump_char(args):
 def insert_import(buf, imp):
     # check for file level imports which means they should all be at the top
     imp_starts = {'import', 'from'}
-    line_no = 0
     found_imp = False
-    for line in buf:
+    for line_no, line in enumerate(buf):
         line = line.strip()
         if not line:
-            line_no = line_no + 1
             continue
         first_word = line.split(' ')[0]
         if first_word not in imp_starts:
@@ -220,9 +218,6 @@ def insert_import(buf, imp):
         elif line == imp:
             found_imp = True
             break
-        else:
-            # found an import statement that's not this one...continue
-            line_no = line_no + 1
 
     if not found_imp:
         # we didn't find this import so return the line where we should insert
