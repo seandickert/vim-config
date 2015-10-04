@@ -29,9 +29,13 @@ def get_mark(pos):
     row = pos[0]
     col = pos[1]
     row = row - 1
+
     if col >= len(buf[row]) - 1:
         col = len(buf[row]) - 1
 
+    if not buf[row].strip():
+        col = 0
+ 
     return (row,col) 
 
 def selected_lines():
@@ -263,6 +267,42 @@ def delete_ipdb(args):
         del buf[indx]
 
 
+# assumes that backspace was pressed and the char to be deleted
+# is to the left of the cursor
+def delete_char(args):
+    buf = vim.current.buffer
+    (row, col) = get_mark(vim.current.window.cursor)
+    # if we're at the beginning don't do anything or not about to backspace over
+    # something that has a pair
+    if not col or buf[row][col - 1] not in _CLOSING_PARTNERS:
+        return
+    close = _CLOSING_PARTNERS[buf[row][col - 1]]
+    steps = 1    
+    delete = False
+    for c in buf[row][col:]:
+        if c == ' ':
+            steps = steps + 1
+        elif c == close:
+            # steps either started at 1 or was incremented at end of last loop (when we saw a space)
+            delete = True
+            break
+        else:
+            break
+
+    # if we found an opening and closing pair with nothing but space between,
+    # go ahead and get rid of them and the space
+    if delete:
+        buf[row] = buf[row][:col] + buf[row][col + steps:]
+
+
+# useful for debugging
+def vdbg(line):
+    log_file = os.path.join(os.path.expanduser('~'), '.vim', 'log.txt')
+    with open(log_file, 'a') as my_log:
+        my_log.write(str(line))
+        my_log.write('\n')
+
+
 def functions():
     func_dir = {
         'comment': comment_block,
@@ -272,7 +312,8 @@ def functions():
         'open_char': open_char,
         'jump_char': jump_char,
         'insert_ipdb': insert_ipdb,
-        'delete_ipdb': delete_ipdb
+        'delete_ipdb': delete_ipdb,
+        'delete_char': delete_char
     }
 
     return func_dir

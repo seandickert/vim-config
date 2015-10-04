@@ -50,6 +50,12 @@ function! DeleteIpdb()
     execute g:exec_com
     return ""
 endfunc
+
+function! DeleteChar()
+    python sys.argv = ["delete_char"]
+    execute g:exec_com
+    return ""
+endfunc
     
 augroup python_only
 autocmd!
@@ -72,3 +78,5 @@ inoremap " <C-R>=OpenChar('"')<cr>
 inoremap ) <C-R>=JumpChar('(')<cr>
 inoremap } <C-R>=JumpChar('{')<cr>
 inoremap ] <C-R>=JumpChar('[')<cr>
+
+inoremap <BS> <C-R>=DeleteChar()<cr><BS>
