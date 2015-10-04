@@ -203,6 +203,65 @@ def jump_char(args):
 
 
 
+def insert_import(buf, imp):
+    # check for file level imports which means they should all be at the top
+    imp_starts = {'import', 'from'}
+    line_no = 0
+    found_imp = False
+    for line in buf:
+        line = line.strip()
+        if not line:
+            line_no = line_no + 1
+            continue
+        first_word = line.split(' ')[0]
+        if first_word not in imp_starts:
+            # found a non blank line that doesn't start with imp
+            break
+        elif line == imp:
+            found_imp = True
+            break
+        else:
+            # found an import statement that's not this one...continue
+            line_no = line_no + 1
+
+    if not found_imp:
+        # we didn't find this import so return the line where we should insert
+        return line_no
+    else:
+        return None
+
+
+def insert_ipdb(args):
+    imp = 'import ipdb'
+    ins = 'ipdb.set_trace()'
+    buf = vim.current.buffer
+    (row, col) = get_mark(vim.current.window.cursor)
+    insert_pos = insert_import(buf, imp)
+    if insert_pos and row > insert_pos:
+        buf.append('', insert_pos)
+        buf.append(imp, insert_pos)
+        buf.append('', insert_pos)
+
+        # increase the row # by 3 as we've added 3 lines
+        buf.append(ins, row + 3)
+        vim.current.window.cursor = (row + 4, col)
+    elif not insert_pos:
+        buf.append(ins, row)
+        vim.current.window.cursor = (row + 1, col)
+    
+
+def delete_ipdb(args):
+    to_delete = {'import ipdb', 'ipdb.set_trace()'}
+    buf = vim.current.buffer
+    delete_lines = []
+    for indx, line in enumerate(buf):
+        if line.strip() in to_delete: 
+            delete_lines.append(indx)
+
+    for indx in reversed(delete_lines):
+        del buf[indx]
+
+
 def functions():
     func_dir = {
         'comment': comment_block,
@@ -210,7 +269,9 @@ def functions():
         'list': make_list,
         'dict': make_dict,
         'open_char': open_char,
-        'jump_char': jump_char
+        'jump_char': jump_char,
+        'insert_ipdb': insert_ipdb,
+        'delete_ipdb': delete_ipdb
     }
 
     return func_dir

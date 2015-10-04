@@ -89,7 +89,7 @@ inoremap <c-u> <esc>viwU<esc>ea
 nnoremap - ddp
 "move line up 
 nnoremap + ddkkp
-nnoremap <leader>k :E<CR>
+nnoremap <leader>k :Explore<CR>
 
 noremap N Nzz
 noremap n nzz
