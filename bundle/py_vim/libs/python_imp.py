@@ -10,7 +10,8 @@ _COMMENT_CHARS = {
     '.c': '//',
     '.txt': '//',
     '.pl': '#',
-    '.js': '//'
+    '.js': '//',
+    '.vim': '"'
 }
 
 _CLOSING_PARTNERS = {
@@ -64,7 +65,12 @@ def set_text(start, end, block):
 
 def get_comment_char():
     buf_name = vim.current.buffer.name
-    file_type = os.path.splitext(buf_name)[1]
+    base = os.path.basename(buf_name)
+    file_parts = os.path.splitext(base)
+    if file_parts[0] == 'vimrc':
+        # hack for the vim setup i've got going
+        return _COMMENT_CHARS['.vim']
+    file_type = file_parts[1]
     try:
         return _COMMENT_CHARS[file_type]
     except KeyError:
