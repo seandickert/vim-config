@@ -804,7 +804,7 @@ fu! <sid>Columnize(field) "{{{3
             let dec = get(s:decimal_column, colnr)
         endif
         let field = (has_delimiter ?  a:field[:-2] : a:field)
-        let fmt = printf("%%%d.%df", width+1, dec)
+        "let fmt = printf("%%%d.%df", width+1, dec)
         try
             if s:nr_format[1] isnot '.'
                 let field = substitute(field, s:nr_format[1], '.', 'g')
@@ -819,8 +819,7 @@ fu! <sid>Columnize(field) "{{{3
         endtry
         return result
     else
-        " right align
-        return printf("%*S", width+1 ,  a:field)
+        return printf('%*S', (width+1) ,  a:field)
     endif
 endfun
 fu! <sid>GetColPat(colnr, zs_flag) "{{{3
