@@ -215,7 +215,7 @@ def jump_char(args):
 
 def insert_import(buf, imp):
     # check for file level imports which means they should all be at the top
-    imp_starts = {'import', 'from'}
+    imp_starts = ['import', 'from']
     found_imp = False
     for line_no, line in enumerate(buf):
         line = line.strip()
@@ -256,7 +256,7 @@ def insert_ipdb(args):
     
 
 def delete_ipdb(args):
-    to_delete = {'import ipdb', 'ipdb.set_trace()'}
+    to_delete = ['import ipdb', 'ipdb.set_trace()']
     buf = vim.current.buffer
     delete_lines = []
     for indx, line in enumerate(buf):
@@ -298,9 +298,10 @@ def delete_char(args):
 # useful for debugging
 def vdbg(line):
     log_file = os.path.join(os.path.expanduser('~'), '.vim', 'log.txt')
-    with open(log_file, 'a') as my_log:
-        my_log.write(str(line))
-        my_log.write('\n')
+    my_log = open(log_file, 'a')
+    my_log.write(str(line))
+    my_log.write('\n')
+    my_log.close()
 
 
 def functions():
