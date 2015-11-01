@@ -17,7 +17,7 @@ augroup END
 
 "Shift tab now does reverse tab
 inoremap <S-Tab> <C-d>
-
+        [Z]
 "p is now a movement for an operator that says everything inside parens so dp will delete everything between parens
 "works with all operators such as y (yank), c (change), etc
 onoremap p i(
@@ -75,10 +75,14 @@ set smartcase
 
 set incsearch
 
-let g:netrw_liststyle=3
+set encoding=utf-8
 
+let g:netrw_liststyle=3
+    
 "wrap current word in quotes and move to end of word
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+"wrap current word in ' and move to end of word
+nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
 "edit vimrc
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
 "source vimrc

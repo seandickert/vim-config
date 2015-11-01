@@ -2,6 +2,7 @@ import vim
 import sys
 import os
 
+
 _COMMENT_CHARS = {
     '.py': '#',
     '.cpp': '//',
@@ -101,15 +102,14 @@ def uncomment_block(args):
 
 def comma_list(block):
     ret_block = []
-    for line in block:
+    for idx, line in enumerate(block):
         words = line.split(' ')
         new_line = ''
         for word in words:
-           new_line = new_line + word + ', '
+            new_line = new_line + word
+            if idx < len(block) - 1:
+                new_line = new_line + ', '
         ret_block.append(new_line)
-
-    # remove the trailing comma from the last line
-    ret_block[-1] = ret_block[-1][:-1]  
 
     return ret_block
     
@@ -236,31 +236,67 @@ def insert_import(buf, imp):
         return None
 
 
+# inserts an ipdb debug statement below the cursor
+# also inserts the import if needed
 def insert_ipdb(args):
     imp = 'import ipdb'
     ins = 'ipdb.set_trace()'
     buf = vim.current.buffer
-    (row, col) = get_mark(vim.current.window.cursor)
+    row, col = get_mark(vim.current.window.cursor)
     insert_pos = insert_import(buf, imp)
+    add_to = 0  # just insert at row unless need an import
     if insert_pos and row > insert_pos:
         buf.append('', insert_pos)
         buf.append(imp, insert_pos)
         buf.append('', insert_pos)
 
         # increase the row # by 3 as we've added 3 lines
-        buf.append(ins, row + 3)
-        vim.current.window.cursor = (row + 4, col)
-    elif not insert_pos:
-        buf.append(ins, row)
-        vim.current.window.cursor = (row + 1, col)
-    
+        add_to = 3
+
+    # indent to the same level as the row we're on
+    # which ends up being the row below the debug
+    row_below = row + add_to
+    if row_below < len(buf):
+        if buf[row_below].strip() != '':
+            spaces = get_space(buf[row_below])
+            ins = spaces + ins
+    buf.append(ins, row + add_to)
+    vim.current.window.cursor = (row + add_to + 1, col)
+
+
+# gets all spaces at start of line
+def get_space(line):
+    ret = ''
+    for c in line:
+        if c == ' ':
+            ret = ret + ' '
+        else:
+            break
+    return ret
+
 
 def delete_ipdb(args):
+    imp_starts = ['import', 'from']
     to_delete = ['import ipdb', 'ipdb.set_trace()']
     buf = vim.current.buffer
     delete_lines = []
+    delete_header_space = True
+    allow_blanks = 2
+    found_blanks = 0
     for indx, line in enumerate(buf):
-        if line.strip() in to_delete: 
+        stripped_line = line.strip()
+        first_word = stripped_line.split(' ')[0]
+        if stripped_line == '':
+            if delete_header_space: 
+                if found_blanks < allow_blanks:
+                    found_blanks = found_blanks + 1
+                else:
+                    delete_lines.append(indx)
+        # the imports are done, we've seen a non empty line, and it's not import ipdb, so stop looking
+        # empty lines to delete
+        if stripped_line != '' and stripped_line != 'import ipdb' and first_word not in imp_starts:
+            delete_header_space = False
+        if stripped_line in to_delete: 
             delete_lines.append(indx)
 
     for indx in reversed(delete_lines):
