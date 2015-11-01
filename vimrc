@@ -17,7 +17,6 @@ augroup END
 
 "Shift tab now does reverse tab
 inoremap <S-Tab> <C-d>
-        [Z]
 "p is now a movement for an operator that says everything inside parens so dp will delete everything between parens
 "works with all operators such as y (yank), c (change), etc
 onoremap p i(
