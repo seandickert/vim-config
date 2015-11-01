@@ -20,20 +20,19 @@ inoremap <S-Tab> <C-d>
 "p is now a movement for an operator that says everything inside parens so dp will delete everything between parens
 "works with all operators such as y (yank), c (change), etc
 onoremap p i(
-onoremap ' i'
-onoremap " i"
-onoremap [ i[
-onoremap { i{
-onoremap < i<
+onoremap a i'
+onoremap q i"
+onoremap b i[
+onoremap s i{
+onoremap c i<
 
+"outer paren, outer apostrophe, etc"
 onoremap op a(
-onoremap o' a'
-onoremap o" a"
-onoremap o[ a[
-onoremap o{ a{
-onoremap o< a<
-
-"inoremap FF <Esc>
+onoremap oa a'
+onoremap oq a"
+onoremap ob a[
+onoremap os a{
+onoremap oc a<
 "vnoremap FF <Esc>
 "as a test..could get annoying
 inoremap jk <Esc>
