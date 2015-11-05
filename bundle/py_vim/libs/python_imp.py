@@ -219,7 +219,8 @@ def insert_import(buf, imp):
     found_imp = False
     for line_no, line in enumerate(buf):
         line = line.strip()
-        if not line:
+        # skip empty lines or lines that are comments
+        if not line or line[0] == '#':
             continue
         first_word = line.split(' ')[0]
         if first_word not in imp_starts:
@@ -294,7 +295,7 @@ def delete_ipdb(args):
                     delete_lines.append(indx)
         # the imports are done, we've seen a non empty line, and it's not import ipdb, so stop looking
         # empty lines to delete
-        if stripped_line != '' and stripped_line != 'import ipdb' and first_word not in imp_starts:
+        if stripped_line != '' and stripped_line != 'import ipdb' and first_word not in imp_starts and stripped_line[0] != '#':
             delete_header_space = False
         if stripped_line in to_delete: 
             delete_lines.append(indx)
