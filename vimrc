@@ -20,6 +20,10 @@ autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 nnoremap , za
 
+"config settings for taglist
+let g:Tlist_Process_File_Always = 1
+nnoremap <silent> <F8> :TlistToggle<CR>
+
 autocmd BufNewFile,BufRead *.py call SetPythonOptions()
 
 function SetPythonOptions()
