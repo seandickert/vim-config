@@ -1,13 +1,45 @@
 let g:pathogen_disabled = ['']
+
 let mapleader=" "
 
 "So pathogen sets the right runtime paths
 execute pathogen#infect()
 
 filetype plugin on
-
 "turn on syntax highlighting
 syntax on  
+
+"highlight setting for bad whitespace
+highlight BadWhitespace ctermbg=red guibg=red
+
+"config settings for SimpylFold
+let g:SimpylFold_docstring_preview = 1
+let g:SimpylFold_fold_docstring = 0
+let g:SimpylFold_fold_import = 0
+autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
+autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
+nnoremap , za
+
+autocmd BufNewFile,BufRead *.py call SetPythonOptions()
+
+function SetPythonOptions()
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set textwidth=79
+    set expandtab
+    set autoindent
+    set fileformat=unix
+endfunction
+
+autocmd BufNewFile,BufRead *.js, *.html, *.css call SetWebOptions()
+function SetWebOptions()
+    set tabstop=2
+    set softtabstop=2
+    set shiftwidth=2
+endfunction
+
+autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 augroup filetype_all
 "autocmd! clears the group out preventing vim from creating the same autocmd multiple times
@@ -98,10 +130,6 @@ noremap n nzz
 
 nnoremap <silent> <leader><leader> :noh<cr><esc>
 
-set tabstop=4
-set shiftwidth=4
-set expandtab
-set autoindent
 
 nnoremap <leader>g :vimgrep<space>/
 
