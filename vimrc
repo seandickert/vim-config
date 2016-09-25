@@ -19,6 +19,7 @@ let g:SimpylFold_fold_import = 0
 autocmd BufWinEnter *.py setlocal foldexpr=SimpylFold(v:lnum) foldmethod=expr
 autocmd BufWinLeave *.py setlocal foldexpr< foldmethod<
 nnoremap , za
+nnoremap < zA
 
 "config settings for taglist
 let g:Tlist_Process_File_Always = 1
