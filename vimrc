@@ -22,6 +22,7 @@ nnoremap , za
 
 "config settings for taglist
 let g:Tlist_Process_File_Always = 1
+let g:Tlist_Auto_Open=1
 nnoremap <silent> <F8> :TlistToggle<CR>
 
 autocmd BufNewFile,BufRead *.py call SetPythonOptions()
