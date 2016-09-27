@@ -1,4 +1,4 @@
-let g:pathogen_disabled = ['']
+let g:pathogen_disabled = ['py_vim']
 
 let mapleader=" "
 
@@ -7,10 +7,16 @@ execute pathogen#infect()
 
 filetype plugin on
 "turn on syntax highlighting
-syntax on  
+syntax on
 
-"highlight setting for bad whitespace
-highlight BadWhitespace ctermbg=red guibg=red
+"indentLine settings
+let g:indentLine_leadingSpaceChar = '·'
+let g:indentLine_leadingSpaceEnabled = 1
+"delimitmate settings
+au FileType python let b:delimitMate_nesting_quotes = ['"']
+
+"close tag settings for xml
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.xml"
 
 "config settings for SimpylFold
 let g:SimpylFold_docstring_preview = 1
@@ -23,8 +29,13 @@ nnoremap < zA
 
 "config settings for taglist
 let g:Tlist_Process_File_Always = 1
-let g:Tlist_Auto_Open=1
+let g:Tlist_Auto_Open=0
 nnoremap <silent> <F8> :TlistToggle<CR>
+
+"settings for syntastic
+let g:syntastic_python_checkers = ['pep8', 'pyflakes', 'python']
+"let g:syntastic_cpp_checkers = []
+let g:syntastic_aggregate_errors = 1
 
 autocmd BufNewFile,BufRead *.py call SetPythonOptions()
 
@@ -44,8 +55,6 @@ function SetWebOptions()
     set softtabstop=2
     set shiftwidth=2
 endfunction
-
-autocmd BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 augroup filetype_all
 "autocmd! clears the group out preventing vim from creating the same autocmd multiple times
@@ -114,7 +123,7 @@ set incsearch
 set encoding=utf-8
 
 let g:netrw_liststyle=3
-    
+
 "wrap current word in quotes and move to end of word
 nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
 "wrap current word in ' and move to end of word
@@ -127,7 +136,7 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 inoremap <c-u> <esc>viwU<esc>ea
 "move line down
 nnoremap - ddp
-"move line up 
+"move line up
 nnoremap + ddkkp
 nnoremap <leader>k :Explore<CR>
 
