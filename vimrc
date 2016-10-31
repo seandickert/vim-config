@@ -36,6 +36,8 @@ nnoremap <silent> <F8> :TlistToggle<CR>
 let g:syntastic_python_checkers = ['pep8', 'pyflakes', 'python']
 "let g:syntastic_cpp_checkers = []
 let g:syntastic_aggregate_errors = 1
+"don't check automatically
+let b:syntastic_mode="passive"
 
 autocmd BufNewFile,BufRead *.py call SetPythonOptions()
 
@@ -43,7 +45,6 @@ function SetPythonOptions()
     set tabstop=4
     set softtabstop=4
     set shiftwidth=4
-    set textwidth=79
     set expandtab
     set autoindent
     set fileformat=unix
