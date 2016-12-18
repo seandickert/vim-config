@@ -32,6 +32,9 @@ let g:Tlist_Process_File_Always = 1
 let g:Tlist_Auto_Open=0
 nnoremap <silent> <F8> :TlistToggle<CR>
 
+"nerdtree settings
+nnoremap <silent> <F7> :NERDTreeToggle<CR>
+
 "settings for syntastic
 let g:syntastic_python_checkers = ['pep8', 'pyflakes', 'python']
 "let g:syntastic_cpp_checkers = []
