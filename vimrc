@@ -1,4 +1,4 @@
-let g:pathogen_disabled = ['py_vim']
+let g:pathogen_disabled = ['py_vim', 'dwm']
 
 let mapleader=" "
 
@@ -41,6 +41,15 @@ let g:syntastic_python_checkers = ['pep8', 'pyflakes', 'python']
 let g:syntastic_aggregate_errors = 1
 "don't check automatically
 let b:syntastic_mode="passive"
+
+"vim airline
+let g:airline#extensions#tabline#enabled = 1
+
+"ctrlp
+let g:ctrlp_custom_ignore = {
+        \ 'dir': '\v[\/]\.(git|hg|svn)$',
+        \ 'file': '\v\.(ipynb)$'
+\}
 
 autocmd BufNewFile,BufRead *.py call SetPythonOptions()
 
@@ -147,6 +156,8 @@ nnoremap <leader>k :Explore<CR>
 noremap N Nzz
 noremap n nzz
 
+nnoremap mm :bn<CR>
+
 nnoremap <silent> <leader><leader> :noh<cr><esc>
 
 
@@ -166,10 +177,12 @@ nnoremap <leader>wh <C-w>s<CR>
 nnoremap <leader>w <C-w>w<CR>
 nnoremap <leader>wq <C-w>q<CR>
 
-nnoremap <silent> <C-h> :wincmd h<CR>
-nnoremap <silent> <C-j> :wincmd j<CR>
-nnoremap <silent> <C-k> :wincmd k<CR>
-nnoremap <silent> <C-l> :wincmd l<CR>
+"nnoremap <silent> <C-h> :wincmd h<CR>
+"nnoremap <silent> <C-j> :wincmd j<CR>
+"nnoremap <silent> <C-k> :wincmd k<CR>
+"nnoremap <silent> <C-l> :wincmd l<CR>
+
+nnoremap <silent> <C-j> <C-w>w
 
 nnoremap <leader>r <C-R>
 
