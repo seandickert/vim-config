@@ -4,6 +4,7 @@ let mapleader=" "
 
 "So pathogen sets the right runtime paths
 execute pathogen#infect()
+Helptags
 
 filetype plugin on
 "turn on syntax highlighting
@@ -48,7 +49,7 @@ let g:airline#extensions#tabline#enabled = 1
 "ctrlp
 let g:ctrlp_custom_ignore = {
         \ 'dir': '\v[\/]\.(git|hg|svn)$',
-        \ 'file': '\v\.(ipynb)$'
+        \ 'file': '\v\.(ipynb|pyc)$'
 \}
 
 autocmd BufNewFile,BufRead *.py call SetPythonOptions()
