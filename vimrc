@@ -41,7 +41,10 @@ let g:syntastic_python_checkers = ['pep8', 'pyflakes', 'python']
 "let g:syntastic_cpp_checkers = []
 let g:syntastic_aggregate_errors = 1
 "don't check automatically
-let b:syntastic_mode="passive"
+let g:syntastic_mode_map = {
+        \ "mode": "passive",
+        \ "active_filetypes": [],
+        \ "passive_filetypes": [] }
 
 "vim airline
 let g:airline#extensions#tabline#enabled = 1
@@ -63,7 +66,17 @@ function SetPythonOptions()
     set fileformat=unix
 endfunction
 
-autocmd BufNewFile,BufRead *.js, *.html, *.css call SetWebOptions()
+autocmd BufNewFile,BufRead *.cpp,*.c,*.hpp,*.h call SetCPPOptions()
+function SetCPPOptions()
+    set tabstop=4
+    set softtabstop=4
+    set shiftwidth=4
+    set noexpandtab
+    set autoindent
+    set smartindent
+endfunction
+
+autocmd BufNewFile,BufRead *.js,*.html,*.css call SetWebOptions()
 function SetWebOptions()
     set tabstop=2
     set softtabstop=2
