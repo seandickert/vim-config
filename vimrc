@@ -35,6 +35,8 @@ nnoremap <silent> <F8> :TlistToggle<CR>
 
 "nerdtree settings
 nnoremap <silent> <F7> :NERDTreeToggle<CR>
+autocmd VimEnter * NERDTree
+autocmd VimEnter * wincmd p
 
 "settings for syntastic
 let g:syntastic_python_checkers = ['pep8', 'pyflakes', 'python']
@@ -165,7 +167,7 @@ inoremap <c-u> <esc>viwU<esc>ea
 nnoremap - ddp
 "move line up
 nnoremap + ddkkp
-nnoremap <leader>k :Explore<CR>
+"nnoremap <leader>k :Explore<CR>
 
 noremap N Nzz
 noremap n nzz
@@ -196,7 +198,9 @@ nnoremap <leader>wq <C-w>q<CR>
 "nnoremap <silent> <C-k> :wincmd k<CR>
 "nnoremap <silent> <C-l> :wincmd l<CR>
 
-nnoremap <silent> <C-j> <C-w>w
+"nnoremap <silent> <C-j> <C-w>w
+nnoremap <silent> <leader>j <C-w>w
+nnoremap <silent> <leader>k <C-w>W
 
 nnoremap <leader>r <C-R>
 
