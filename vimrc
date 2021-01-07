@@ -1,4 +1,4 @@
-let g:pathogen_disabled = ['py_vim', 'dwm']
+let g:pathogen_disabled = ['py_vim', 'dwm.vim-master']
 
 let mapleader=" "
 
@@ -57,7 +57,7 @@ let g:ctrlp_custom_ignore = {
         \ 'file': '\v\.(ipynb|pyc)$'
 \}
 
-autocmd BufNewFile,BufRead *.py call SetPythonOptions()
+autocmd BufNewFile,BufRead *.py,*.R,*.r  call SetPythonOptions()
 
 function SetPythonOptions()
     set tabstop=4
