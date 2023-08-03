@@ -1,4 +1,4 @@
-let mapleader=" "
+" let mapleader=" " !IN VS CODE, THIS HAS TO BE SET IN THE SETTINGS!
 
 "Shift tab now does reverse tab
 inoremap <S-Tab> <C-d>
