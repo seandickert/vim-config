@@ -1,0 +1,97 @@
+let mapleader=" "
+
+"Shift tab now does reverse tab
+inoremap <S-Tab> <C-d>
+"p is now a movement for an operator that says everything inside parens so dp will delete everything between parens
+"works with all operators such as y (yank), c (change), etc
+onoremap p i(
+onoremap a i'
+onoremap q i"
+onoremap b i[
+onoremap s i{
+onoremap c i<
+
+"outer paren, outer apostrophe, etc"
+onoremap op a(
+onoremap oa a'
+onoremap oq a"
+onoremap ob a[
+onoremap os a{
+onoremap oc a<
+"vnoremap FF <Esc>
+"as a test..could get annoying
+inoremap jk <Esc>
+vnoremap jk <Esc>
+"force me to get used to this mapping!!!
+vnoremap <Esc> <nop>
+inoremap <Esc> <nop>
+
+set nowrap
+
+"sets < or > to shift to a multiple of shiftwidth
+set shiftround
+set cursorline
+
+set hlsearch
+
+set number
+
+set laststatus=2
+
+set ignorecase
+
+set smartcase
+
+set incsearch
+
+set encoding=utf-8
+
+"wrap current word in quotes and move to end of word
+nnoremap <leader>" viw<esc>a"<esc>hbi"<esc>lel
+"wrap current word in ' and move to end of word
+nnoremap <leader>' viw<esc>a'<esc>hbi'<esc>lel
+"edit vimrc
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+"source vimrc
+nnoremap <leader>sv :source $MYVIMRC<cr>
+"make current word upper case
+inoremap <c-u> <esc>viwU<esc>ea
+"move line down
+nnoremap - ddp
+"move line up
+nnoremap + ddkkp
+"nnoremap <leader>k :Explore<CR>
+
+noremap N Nzz
+noremap n nzz
+
+nnoremap mm :bn<CR>
+
+nnoremap <silent> <leader><leader> :noh<cr><esc>
+
+
+nnoremap <leader>g :vimgrep<space>/
+
+nnoremap % v%
+
+nnoremap <silent> <leader>t :tabnew<CR>
+nnoremap <silent> <leader>tq :tabclose<CR>
+nnoremap <silent> <leader>tQ :tabonly<CR>
+nnoremap <silent> L :tabnext<CR>
+nnoremap <silent> H :tabprevious<CR>
+
+
+nnoremap <leader>wv <C-w>v<CR>
+nnoremap <leader>wh <C-w>s<CR>
+nnoremap <leader>w <C-w>w<CR>
+nnoremap <leader>wq <C-w>q<CR>
+
+nnoremap <silent> <leader>j <C-w>w
+nnoremap <silent> <leader>k <C-w>W
+
+nnoremap <leader>r <C-R>
+
+nnoremap K <C-b>
+nnoremap J <C-f>
+nnoremap <leader>i <C-]>
+nnoremap <leader>o <C-t>
